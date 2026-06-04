@@ -1,6 +1,9 @@
 from mcp.server.fastmcp import FastMCP
 
 import tools
+from database import create_research_sessions_table
+
+create_research_sessions_table()
 
 mcp = FastMCP("labor-market-intelligence")
 
@@ -70,6 +73,36 @@ def find_adjacent_roles(soc_code_or_title: str) -> dict:
         return tools.find_adjacent_roles(soc_code_or_title)
     except ValueError as e:
         return {"error": str(e)}
+
+
+@mcp.tool()
+def save_research_session(
+    summary: str, occupations_researched: str, key_findings: str
+) -> dict:
+    """Save the current research session to persistent storage after completing a task.
+
+    Call this after you have answered a meaningful research question — for example,
+    after comparing occupations, benchmarking compensation, or mapping a career
+    transition — and the findings are worth preserving for future reference. Pass a
+    plain-English summary of what was researched, a comma-separated list of occupation
+    titles or SOC codes examined, and the most important factual findings from the
+    session. Returns a confirmation with the assigned session_id.
+    """
+    return tools.save_research_session(summary, occupations_researched, key_findings)
+
+
+@mcp.tool()
+def list_past_sessions(limit: int = 10) -> dict:
+    """Return recent research sessions saved in this server's history.
+
+    Call this when the user references prior research ("what did we look at before",
+    "last time we compared roles", "what have I already researched"), wants to build
+    on earlier findings, or asks for a summary of past activity. Returns session_id,
+    timestamp, occupations researched, and summary for each session — omits full
+    key_findings to keep the list scannable. Use get_occupation_outlook or other
+    read tools to re-fetch details once you identify the relevant session.
+    """
+    return tools.list_past_sessions(limit)
 
 
 if __name__ == "__main__":

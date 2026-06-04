@@ -70,6 +70,14 @@ CREATE TABLE IF NOT EXISTS compensation (
     work_experience TEXT,
     typical_training TEXT
 );
+
+CREATE TABLE IF NOT EXISTS research_sessions (
+    session_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    occupations_researched TEXT NOT NULL,
+    key_findings TEXT NOT NULL
+);
 """
 
 
@@ -219,6 +227,20 @@ _LOADERS = [
 ]
 
 
+def create_research_sessions_table():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS research_sessions ("
+            "session_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "timestamp TEXT NOT NULL, "
+            "summary TEXT NOT NULL, "
+            "occupations_researched TEXT NOT NULL, "
+            "key_findings TEXT NOT NULL"
+            ")"
+        )
+
+
 def build_database():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
@@ -228,6 +250,7 @@ def build_database():
         print(f"  {table}: {count} rows")
     conn.commit()
     conn.close()
+    create_research_sessions_table()
     print(f"Database written to {DB_PATH}")
 
 

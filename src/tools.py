@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime, timezone
 
 from database import DB_PATH
 
@@ -220,3 +221,40 @@ def find_adjacent_roles(soc_code_or_title: str) -> dict:
                 for r in rows
             ],
         }
+
+
+def save_research_session(
+    summary: str, occupations_researched: str, key_findings: str
+) -> dict:
+    """Save a research session to the database and return the assigned session_id."""
+    ts = datetime.now(timezone.utc).isoformat()
+    with sqlite3.connect(DB_PATH) as conn:
+        cur = conn.execute(
+            "INSERT INTO research_sessions (timestamp, summary, occupations_researched, key_findings) "
+            "VALUES (?, ?, ?, ?)",
+            (ts, summary, occupations_researched, key_findings),
+        )
+        session_id = cur.lastrowid
+    return {"saved": True, "session_id": session_id, "timestamp": ts}
+
+
+def list_past_sessions(limit: int = 10) -> dict:
+    """Return the most recent N research sessions in reverse chronological order."""
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT session_id, timestamp, occupations_researched, summary "
+            "FROM research_sessions ORDER BY session_id DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+    return {
+        "sessions": [
+            {
+                "session_id": r["session_id"],
+                "timestamp": r["timestamp"],
+                "occupations_researched": r["occupations_researched"],
+                "summary": r["summary"],
+            }
+            for r in rows
+        ]
+    }
