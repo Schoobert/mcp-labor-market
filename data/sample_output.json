@@ -1,0 +1,27 @@
+{
+  "query": "I'm a Trust and Safety analyst thinking about my next career move. What roles are most adjacent to mine, and how do the salaries compare? Save this research session when you're done.",
+  "tools_called": ["find_adjacent_roles", "benchmark_compensation", "save_research_session"],
+  "response": {
+    "note": "Trust and Safety Analyst mapped to two BLS proxies: Information Security Analysts and Compliance Officers.",
+    "infosec_track": {
+      "baseline_median_wage": 124910,
+      "adjacent_roles": [
+        {"title": "Computer Network Architects", "median_wage": 130390},
+        {"title": "Information Security Engineers", "median_wage": 108970},
+        {"title": "Digital Forensics Analysts", "median_wage": 108970},
+        {"title": "Penetration Testers", "median_wage": 108970},
+        {"title": "Computer Systems Analysts", "median_wage": 103790},
+        {"title": "Network/Systems Administrators", "median_wage": 96800}
+      ]
+    },
+    "compliance_track": {
+      "adjacent_roles": [
+        {"title": "Compliance Managers", "median_wage": 136550},
+        {"title": "Regulatory Affairs Specialists", "median_wage": 78420},
+        {"title": "Claims Adjusters/Investigators", "median_wage": 76790},
+        {"title": "Paralegals/Legal Assistants", "median_wage": 61010}
+      ]
+    },
+    "session_saved": true
+  }
+}
