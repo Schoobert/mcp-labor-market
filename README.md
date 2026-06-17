@@ -14,7 +14,7 @@ Then wire it into Claude Desktop (see [How to try it](#how-to-try-it) below).
 
 ---
 
-## [Loom walkthrough coming soon]
+## [Loom Walkthrough](https://www.loom.com/share/145924bbc791428d9627fbf422ea2495)
 
 ---
 
@@ -75,7 +75,7 @@ Claude will call `find_adjacent_roles` and `benchmark_compensation` automaticall
 
 You should see Claude reasoning over real O*NET skill importance scores and BLS wage data.
 
-![Claude Desktop calling labor market tools](docs/screenshots/claude_desktop_tool_call.png)
+![Claude Desktop calling labor market tools](docs/screenshots/MCP Claude Desktop Tool Call.webp)
 *Claude Desktop calling the MCP server with a real career query. The "Loaded tools, used labor-market-intelligence integration" line confirms live tool calls.*
 
 ---
